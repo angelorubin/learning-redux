@@ -1,1 +1,3 @@
 export const ADD_ARTICLE = "ADD_ARTICLE";
+export const REDUX_DEVTOOLS =
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
