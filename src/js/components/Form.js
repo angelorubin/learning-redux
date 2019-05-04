@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import uuidv1 from "uuid";
 import { addArticle } from "../actions/index";
+import TextField from "@material-ui/core/TextField";
+import FormLabel from "@material-ui/core/FormLabel";
+import Button from "@material-ui/core/Button";
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -31,15 +34,18 @@ class ConnectedForm extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
-          <label htmlFor="title">Title</label>
-          <input
+          <FormLabel>title</FormLabel>
+          <TextField
             type="text"
             id="title"
             value={title}
             onChange={this.handleChange}
           />
         </div>
-        <button type="submit">SAVE</button>
+        <br />
+        <Button variant="contained" color="primary" type="submit">
+          SAVE
+        </Button>
       </form>
     );
   }
