@@ -1,30 +1,43 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-
 import { userActions } from "../actions";
+import Icon from "@material-ui/core/Icon";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
 class Home extends Component {
   componentDidMount() {
-    this.props.dispatch(userActions.getAll());
+    const { dispatch } = this.props;
+    dispatch(userActions.getAll());
   }
 
   handleDeleteUser(id) {
-    return () => this.props.dispatch(userActions.delete(id));
+    const { dispatch } = this.props;
+    return () => dispatch(userActions.delete(id));
   }
 
   render() {
     const { user, users } = this.props;
     return (
-      <div className="col-md-6 col-md-offset-3">
-        <h1>Hi {user.firstName}!</h1>
-        <p>You're logged in with React!!</p>
-        <h3>All registered users:</h3>
-        {users.loading && <em>Loading users...</em>}
+      <div>
+        <h1>Olá, {user.firstName}!</h1>
+        <p>Você está logado.</p>
+        <h3>Todos os usuários registrados:</h3>
+        {users.loading && <em>Lendo usuários...</em>}
         {users.items && (
-          <ul>
+          <Table>
+            <TableHead>
+              <TableRow>Username</TableRow>
+              <TableRow>Action</TableRow>
+            </TableHead>
+
             {users.items.map((user, index) => (
-              <li key={user.id}>
+              <div key={user.id}>
                 {user.firstName + " " + user.lastName}
                 {user.deleting ? (
                   <em> - Deleting...</em>
@@ -32,13 +45,14 @@ class Home extends Component {
                   <span className="error"> - ERROR: {user.deleteError}</span>
                 ) : (
                   <span>
-                    {" "}
-                    - <a onClick={this.handleDeleteUser(user.id)}>Delete</a>
+                    <a onClick={this.handleDeleteUser(user.id)}>
+                      <Icon>delete_forever</Icon>
+                    </a>
                   </span>
                 )}
-              </li>
+              </div>
             ))}
-          </ul>
+          </Table>
         )}
         <p>
           <Link to="/login">Logout</Link>
