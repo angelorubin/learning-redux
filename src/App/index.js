@@ -22,7 +22,7 @@ class App extends Component {
   render() {
     const alert = this.props;
     return (
-      <>
+      <Fragment>
         <div className="container">
           <div className="col-sm-8 col-sm-offset-2">
             {alert.message && (
@@ -37,7 +37,7 @@ class App extends Component {
             </Router>
           </div>
         </div>
-      </>
+      </Fragment>
     );
   }
 }
