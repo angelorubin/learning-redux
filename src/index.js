@@ -9,8 +9,6 @@ import { Provider } from "react-redux";
 import { configureFakeBackend } from "./helpers/fake-backend";
 configureFakeBackend();
 
-// console.log(store.alert);
-
 render(
   <Provider store={store}>
     <App />
