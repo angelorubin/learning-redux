@@ -9,6 +9,16 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+
+const mapStateToProps = state => {
+  const { users, authentication } = state;
+  const { user } = authentication;
+  return {
+    user,
+    users
+  };
+};
 
 class Home extends Component {
   componentDidMount() {
@@ -23,53 +33,55 @@ class Home extends Component {
 
   render() {
     const { user, users } = this.props;
+    console.log(user);
+
     return (
-      <div>
-        <h1>Olá, {user.firstName}!</h1>
-        <p>Você está logado.</p>
-        <h3>Todos os usuários registrados:</h3>
+      <>
+        <Typography variant="h4">Olá, {user.firstName}!</Typography>
+        <Typography variant="h6">Usuários registrados:</Typography>
         {users.loading && <em>Lendo usuários...</em>}
         {users.items && (
-          <Table>
-            <TableHead>
-              <TableRow>Username</TableRow>
-              <TableRow>Action</TableRow>
-            </TableHead>
-
-            {users.items.map((user, index) => (
-              <div key={user.id}>
-                {user.firstName + " " + user.lastName}
-                {user.deleting ? (
-                  <em> - Deleting...</em>
-                ) : user.deleteError ? (
-                  <span className="error"> - ERROR: {user.deleteError}</span>
-                ) : (
-                  <span>
-                    <a onClick={this.handleDeleteUser(user.id)}>
-                      <Icon>delete_forever</Icon>
-                    </a>
-                  </span>
-                )}
-              </div>
-            ))}
-          </Table>
+          <Paper>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Names</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {users.items.map((user, index) => (
+                  <TableRow key={user.id}>
+                    <TableCell>
+                      {user.firstName + " " + user.lastName}
+                    </TableCell>
+                    {user.deleting ? (
+                      <span>Deleting...</span>
+                    ) : user.deleteError ? (
+                      <span className="error">
+                        {" "}
+                        - ERROR: {user.deleteError}
+                      </span>
+                    ) : (
+                      <TableCell>
+                        <Link to="" onClick={this.handleDeleteUser(user.id)}>
+                          <Icon>delete_forever</Icon>
+                        </Link>
+                      </TableCell>
+                    )}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Paper>
         )}
         <p>
           <Link to="/login">Logout</Link>
         </p>
-      </div>
+      </>
     );
   }
 }
-
-const mapStateToProps = state => {
-  const { users, authentication } = state;
-  const { user } = authentication;
-  return {
-    user,
-    users
-  };
-};
 
 const connectedHome = connect(mapStateToProps)(Home);
 export { connectedHome as Home };

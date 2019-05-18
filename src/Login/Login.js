@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -129,7 +129,6 @@ const mapStateToProps = state => {
   };
 };
 
-const connectedLogin = withRouter(
-  connect(mapStateToProps)(withStyles(styles)(Login))
-);
+const connectedLogin = connect(mapStateToProps)(withStyles(styles)(Login));
+
 export { connectedLogin as Login };

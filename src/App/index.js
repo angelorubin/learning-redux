@@ -13,6 +13,7 @@ class App extends Component {
     super(props);
 
     const { dispatch } = this.props;
+
     history.listen((location, action) => {
       // clear alert on location change
       dispatch(alertActions.clear());
@@ -49,5 +50,4 @@ const mapStateToProps = state => {
   };
 };
 
-const connectedApp = connect(mapStateToProps)(App);
-export { connectedApp as App };
+export default connect(mapStateToProps)(App);
